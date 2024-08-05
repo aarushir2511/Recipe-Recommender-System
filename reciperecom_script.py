@@ -10,6 +10,21 @@ Original file is located at
 """
 
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import nltk
+from nltk.tokenize import word_tokenize,sent_tokenize
+from nltk.stem import PorterStemmer
+from nltk.corpus import stopwords
+import re
+from nltk.stem import WordNetLemmatizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('punkt')
 
 df = pd.read_csv('IndianFoodDatasetCSV.csv')
 
@@ -57,8 +72,7 @@ df.head()
 
 df_tt=pd.cut(x=df['TotalTimeInMins'],bins=[0,15,30,40,60,120,240,1440,3000], labels=['0-15','15-30','30-44','45-60','60-120','120-240','240-1 day','1 day+'])
 
-import matplotlib.pyplot as plt
-
+#Count total time in min
 df_tt.value_counts().plot(kind='bar',color='purple')
 plt.xlabel('Total Time in Mins')
 plt.ylabel('Count')
@@ -72,7 +86,7 @@ cook_time_95th = df['CookTimeInMins'].quantile(0.95)
 # Filter out values above the 95th percentile
 filtered_df = df[(df['PrepTimeInMins'] <= prep_time_95th) & (df['CookTimeInMins'] <= cook_time_95th)]
 
-# Plot the zoomed-in boxplot
+# Prep time in mins vs cook time iin mins
 plt.figure(figsize=(10, 6))
 x=plt.boxplot([filtered_df['PrepTimeInMins'], filtered_df['CookTimeInMins']], patch_artist=True, vert=True)
 colors = ['green', 'lightgreen']
@@ -85,6 +99,7 @@ plt.ylabel('Time in Mins')
 plt.title('Zoomed-in Boxplot (Excluding Extreme Outliers)')
 plt.show()
 
+#different courses
 course_count=df['Course'].value_counts()
 threshold=0.05*course_count.sum()
 course_counts_mod=course_count[course_count>=threshold]
@@ -92,8 +107,6 @@ course_counts_mod['Others'] = course_count[course_count < threshold].sum()
 course_counts_mod.plot(kind='pie', autopct='%1.1f%%', startangle=90,explode=[0.04,0.04,0.0,0.0,0.0,0.0,0.0])
 
 #ingredients vs prep time
-import numpy as np
-import matplotlib.pyplot as plt
 lower_bound=df['PrepTimeInMins'].quantile(0.01)
 upper_bound=df['PrepTimeInMins'].quantile(0.99)
 df['PrepTimeInMins'] = np.clip(df['PrepTimeInMins'], lower_bound, upper_bound)
@@ -102,6 +115,7 @@ ax1.scatter(df['PrepTimeInMins'],df['IngredientsNum'],color='g',marker='o')
 
 df.head(3)
 
+#different types of diet
 dietPlot=df['Diet']
 value_counts = dietPlot.value_counts()
 threshold = 0.05 * value_counts.sum()
@@ -109,7 +123,7 @@ dietPlan_mod = value_counts[value_counts >= threshold]
 dietPlan_mod['others']=value_counts[value_counts<threshold].sum()
 dietPlan_mod.plot(kind='pie',autopct='%1.1f%%',startangle=90)
 
-from wordcloud import WordCloud
+#common ingredients
 text_ingd=' '.join(df['Ingredients'])
 wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text_ingd)
 
@@ -126,6 +140,7 @@ word_freq=Counter(words)
 common_words=word_freq.most_common(10)
 common_words
 
+#frequeny of most common ingredients
 df_common_words=pd.DataFrame(common_words,columns=['Words','Frequency'])
 df_common_words.plot(kind='barh',x='Words',y='Frequency',color='seagreen',figsize=(10,6))
 plt.xlabel('Common words')
@@ -133,25 +148,11 @@ plt.ylabel('Frequency')
 
 """**ML model**"""
 
-#find missing value
 df.isnull().sum()
 
 df['TotalTimeInMins'].mean()
 
 df['Ingredients'].head()
-
-import nltk
-
-from nltk.tokenize import word_tokenize,sent_tokenize
-from nltk.stem import PorterStemmer
-from nltk.corpus import stopwords
-import re
-
-nltk.download('wordnet')
-
-nltk.download('stopwords')
-
-nltk.download('punkt')
 
 df['Ingredients'] = df['Ingredients'].apply(lambda x: re.sub(r'\d+', '', x))
 df['Ingredients'].head()
@@ -167,7 +168,6 @@ stop_words=set(stopwords.words('english'))
 df['Ingredients']=df['Ingredients'].apply(lambda x: [word for word in x if word not in stop_words])
 df['Ingredients'].head()
 
-from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 df['Ingredients'] = df['Ingredients'].apply(lambda x: [lemmatizer.lemmatize(word) for word in x])
 
@@ -182,10 +182,6 @@ df['Ingredients']=df['Ingredients'].apply(lambda x: ' '.join([word for word in x
 df['Ingredients'].head(10)
 
 !pip install scikit-learn
-
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-from sklearn.metrics.pairwise import cosine_similarity
 
 tfv=TfidfVectorizer(min_df=5, max_features=1000, strip_accents='unicode', analyzer='word', token_pattern=r'\w{1,}', ngram_range=(1,2), use_idf=1, smooth_idf=1, sublinear_tf=1, stop_words='english')
 df['Ingredients']=df['Ingredients'].fillna('')
@@ -202,5 +198,5 @@ def give_recipe_Rec(Ingredients):
   for RecipeName, score in give_recipe_Rec:
       print(f"Recipe: {RecipeName}, Similarity Score: {score}")
 
-give_recipe_Rec('egg')
+give_recipe_Rec('egg spinach garlic')
 
