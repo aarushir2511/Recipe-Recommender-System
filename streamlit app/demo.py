@@ -7,7 +7,16 @@ from collections import Counter
 from streamlit_option_menu import option_menu
 import pickle
 from sklearn.metrics.pairwise import cosine_similarity
-import setuptools
+import setuptools  # Assuming you've removed the import distutils line
+
+try:
+    setuptools.setup(
+        # Your setup parameters here
+    )
+except Exception as e:
+    print(f"Error during setup: {e}")
+    import traceback
+    traceback.print_exc()
 
 with st.sidebar:
     selected = option_menu(
