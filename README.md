@@ -21,8 +21,8 @@ This project is a recipe recommender system that uses the concepts of TF-IDF (Te
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/recipe-recommender.git
-    cd recipe-recommender
+    git clone https://github.com/yourusername/Recipe-Recommender-System.git
+    cd Recipe-Recommender-System
     ```
 
 2. Install the required packages:
