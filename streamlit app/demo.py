@@ -7,7 +7,7 @@ from collections import Counter
 from streamlit_option_menu import option_menu
 import pickle
 from sklearn.metrics.pairwise import cosine_similarity
-import distutils.core
+#import distutils.core
 
 with st.sidebar:
     selected = option_menu(
