@@ -35,7 +35,7 @@ if selected == "Recipe Recommender System":
     st.write("- **Detailed Recipe Information**: Get a comprehensive list of ingredients, step-by-step cooking instructions, and preparation time for each recipe.")
     st.write("- **Save and Share**: Save your favorite recipes and share them with friends and family on social media.")
 
-    st.image("C:/Users/KIIT/Desktop/Streamit/cmei.jpg")
+    st.image("cmei.jpg")
     
     st.subheader("Benefits")
     st.write("- **Reduce Food Waste**: Make the most of your available ingredients.")
@@ -53,7 +53,7 @@ if selected == "Recipe Recommender System":
     st.write("If the dataset does not have recipes for the ingredients you gave to the recommender it returns the default first five recipes")
 
 if selected == "Data Analysis":
-    df = pd.read_csv("C:/Users/KIIT/Desktop/Streamit/IndianFoodDatasetCSV.csv")
+    df = pd.read_csv("IndianFoodDatasetCSV.csv")
     st.markdown('''
                 # Learn About The Dataset
                 ''')
