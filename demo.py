@@ -246,13 +246,13 @@ if selected == "Data Analysis":
 
     
 if selected == "Recommender":
-    with open('C:/Users/KIIT/Desktop/Streamit/recipe_recommender_model.sav', 'rb') as file:
+    with open('recipe_recommender_model.sav', 'rb') as file:
         tfv_matrix_diet = pickle.load(file)
 
-    with open('C:/Users/KIIT/Desktop/Streamit/recipe_fit.sav', 'rb') as file:
+    with open('recipe_fit.sav', 'rb') as file:
         tfv = pickle.load(file)
 
-    df = pd.read_csv("C:/Users/KIIT/Desktop/Streamit/cleaned_data.csv")
+    df = pd.read_csv("cleaned_data.csv")
 
     def give_recipe_Rec(Ingredients):
         input_vector = tfv.transform([Ingredients])
