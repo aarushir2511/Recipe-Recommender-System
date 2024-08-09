@@ -77,7 +77,7 @@ if selected == "Data Analysis":
     fig.patch.set_facecolor('lightcyan')
     ax.set_xlabel('Total Time in Mins')
     ax.set_ylabel('Count')
-    ax.set_title('Total Time in Mins')
+    ax.set_title('Cooking time range count')
 
     st.pyplot(fig)
 
@@ -108,7 +108,7 @@ if selected == "Data Analysis":
     ax.set_xticks([1, 2])
     ax.set_xticklabels(['Prep Time In Mins', 'Cook Time In Mins'])
     ax.set_ylabel('Time in Mins')
-    ax.set_title('Zoomed-in Boxplot (Excluding Extreme Outliers)')
+    ax.set_title('Zoomed in Prep Time VS Coo Time')
     st.pyplot(fig)
 
     st.subheader('Different Courses')
@@ -198,7 +198,7 @@ if selected == "Data Analysis":
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.imshow(wordcloud, interpolation='bilinear')
     ax.axis('off')
-    ax.set_title('Word Cloud of Standardized Ingredients')
+    ax.set_title('Word Cloud of Ingredients')
     ax.set_facecolor('lightcyan')
     fig.patch.set_facecolor('lightcyan')
     st.pyplot(fig)
