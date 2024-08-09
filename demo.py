@@ -27,7 +27,7 @@ if selected == "Recipe Recommender System":
     st.write("Using advanced text analysis techniques like TF-IDF (Term Frequency-Inverse Document Frequency) and cosine similarity, our system matches your ingredients with a vast database of recipes to find the best matches. Simply enter your ingredients, and let our algorithm do the rest!")
     
     st.subheader("Dataset In Use :-")
-    df = pd.read_csv("C:/Users/KIIT/Desktop/Streamit/IndianFoodDatasetCSV.csv")
+    df = pd.read_csv("IndianFoodDatasetCSV.csv")
     st.dataframe(df,height=500)
     
     st.subheader("Features Of Our Model")
