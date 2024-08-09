@@ -234,7 +234,7 @@ if selected == "Data Analysis":
     df_common_words.plot(kind='barh', x='Words', y='Frequency', color='midnightblue', ax=ax)
     ax.set_xlabel('Frequency')
     ax.set_ylabel('Common Words')
-    ax.set_title('Top 10 Common Ingredients')
+    ax.set_title('Top 5 most common words in the dataset')
     ax.set_facecolor('lightcyan')
     fig.patch.set_facecolor('lightcyan')
     st.pyplot(fig)
