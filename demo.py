@@ -173,6 +173,7 @@ if selected == "Data Analysis":
     colors2 = ['#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087']
     dietPlan_mod.plot(kind='pie', autopct='%1.1f%%', startangle=90, colors=colors2, ax=ax)
     ax.set_facecolor('lightcyan')
+    ax.set_title('Types of diet')
     fig.patch.set_facecolor('lightcyan')
     st.pyplot(fig)
 
